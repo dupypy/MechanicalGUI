@@ -94,8 +94,6 @@ for n = 1:Headerline
   fgetl(fid);
 end
 colNames = strsplit(fgetl(fid), ',');
-%unit = strsplit(fgetl(fid), ',');
-%data = textscan(fid,'%f%f%f%f%f%f%f', 'Delimiter', ','); % headerline doesn't work here due to empty cells
 fclose(fid);
 set(hObject, 'string', colNames);
 
@@ -116,8 +114,17 @@ function updateAxes(hObject, eventdata, handles)
 xColNum  = get(handles.popupmenuX, 'value');
 yColNum  = get(handles.popupmenuY, 'value');
 filename = handles.filename;
+fid = fopen(filename);
+Headerline = 6;   % remember to check
+for n = 1:Headerline
+  fgetl(fid);
+end
+unit = strsplit(fgetl(fid), ',');
 [x, y] = parsedata(filename, xColNum, yColNum);
-plot(handles.axes1, x, y);
+plot(handles.axes1, x, y, 'o', 'linewidth', 0.5);
+set(gca, 'box', 'off', 'XMinorTick', 'on', 'YMinorTick', 'on');
+set(handles.ylabel, 'string', unit(yColNum));
+set(handles.xlabel, 'string', unit(xColNum));
 
 
 
