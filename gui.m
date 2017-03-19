@@ -83,8 +83,8 @@ handles.filename = uigetfile('*.csv');
 guidata(hObject, handles);
 setPopupMenuString(handles.popupmenuX, eventdata, handles); % custom function
 setPopupMenuString(handles.popupmenuY, eventdata, handles); % custom function
-set(handles.popupmenuX, 'callback', '@(hObject,eventdata)gui(''updateAxes'',hObject,eventdata,guidata(hObject))');
-set(handles.popupmenuY, 'callback', '@(hObject,eventdata)gui(''updateAxes'',hObject,eventdata,guidata(hObject))');
+set(handles.popupmenuX, 'callback', 'gui(''updateAxes'',gcbo, [], guidata(gcbo))');
+set(handles.popupmenuY, 'callback', 'gui(''updateAxes'',gcbo, [], guidata(gcbo))');
 
 function setPopupMenuString(hObject, eventdata, handles)    % define custom function
 filename = handles.filename;
