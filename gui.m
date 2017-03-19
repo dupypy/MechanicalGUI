@@ -22,7 +22,7 @@ function varargout = gui(varargin)
 
 % Edit the above text to modify the response to help gui
 
-% Last Modified by GUIDE v2.5 18-Mar-2017 14:47:15
+% Last Modified by GUIDE v2.5 19-Mar-2017 13:00:46
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -86,6 +86,7 @@ setPopupMenuString(handles.popupmenuY, eventdata, handles); % custom function
 set(handles.popupmenuX, 'callback', 'gui(''updateAxes'',gcbo, [], guidata(gcbo))');
 set(handles.popupmenuY, 'callback', 'gui(''updateAxes'',gcbo, [], guidata(gcbo))');
 
+
 function setPopupMenuString(hObject, eventdata, handles)    % define custom function
 filename = handles.filename;
 fid = fopen(filename);
@@ -125,6 +126,18 @@ plot(handles.axes1, x, y, 'o', 'linewidth', 0.5);
 set(gca, 'box', 'off', 'XMinorTick', 'on', 'YMinorTick', 'on');
 set(handles.ylabel, 'string', unit(yColNum));
 set(handles.xlabel, 'string', unit(xColNum));
+[px, py] = getpts;
+[p] = linearfit(px, x, y)
+
+
+function [p] = linearfit(px, x, y)
+index = (x >= px(1)) & (x <= px(2));   %# Get the index of the line segment
+p = polyfit(x(index),y(index),1);  %# Fit polynomial coefficients for line
+yfit = p(2)+x.*p(1);  %# Compute the best-fit line
+hold on;              %# Add to the plot
+plot(x,yfit,'r');     %# Plot the best-fit line
+
+
 
 
 
@@ -175,3 +188,6 @@ function popupmenuY_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
+
+
+
