@@ -22,7 +22,7 @@ function varargout = gui(varargin)
 
 % Edit the above text to modify the response to help gui
 
-% Last Modified by GUIDE v2.5 19-Mar-2017 13:49:28
+% Last Modified by GUIDE v2.5 19-Mar-2017 21:45:04
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -128,28 +128,43 @@ set(handles.ylabel, 'string', unit(yColNum));
 set(handles.xlabel, 'string', unit(xColNum));
 pause      % press enter to continue selecting points
 
-[px1, py1] = ginput(1);
-set(handles.point1, 'string', num2str(px1(1)));
-[px2, py2] = ginput(1);
-set(handles.point2, 'string', num2str(px2(1)));
-[px3, py3] = ginput(1);
-set(handles.point3, 'string', num2str(px3(1)));
-[px4, py4] = ginput(1);
-set(handles.point4, 'string', num2str(px4(1)));
-[px5, py5] = ginput(1);
-set(handles.point5, 'string', num2str(px5(1)));
-[px6, py6] = ginput(1);
-set(handles.point6, 'string', num2str(px6(1)));
-%[p] = linearfit(px, x, y)
-%set(handles.fitting, 'string', num2str(p));
+[p1] = ginput(1);
+set(handles.point1, 'string', num2str(p1));
+[p2] = ginput(1);
+set(handles.point2, 'string', num2str(p2));
+[p3] = ginput(1);
+set(handles.point3, 'string', num2str(p3));
+[p4] = ginput(1);
+set(handles.point4, 'string', num2str(p4));
+[p5] = ginput(1);
+set(handles.point5, 'string', num2str(p5));
+[p6] = ginput(1);
+set(handles.point6, 'string', num2str(p6));
+[fit1, fit2, fit3] = linearfit(p1, p2, p3, p4, p5, p6, x, y)
+set(handles.slope1, 'string', num2str(fit1));
+set(handles.slope2, 'string', num2str(fit2));
+set(handles.slope3, 'string', num2str(fit3));
 
-%function [p] = linearfit(px, x, y)
-%index = (x >= px(1)) & (x <= px(2));   %# Get the index of the line segment
-%p = polyfit(x(index),y(index),1);  %# Fit polynomial coefficients for line
-%yfit = p(2)+x.*p(1);  %# Compute the best-fit line
-%hold on;              %# Add to the plot
-%plot(x,yfit,'r');     %# Plot the best-fit line
-%hold off;
+function [fit1, fit2, fit3] = linearfit(p1, p2, p3, p4, p5, p6, x, y)
+index = (x >= p1(1)) & (x <= p2(1));   %# Get the index of the line segment
+fit1 = polyfit(x(index),y(index),1);  %# Fit polynomial coefficients for line
+yfit = fit1(2)+x.*fit1(1);  %# Compute the best-fit line
+hold on;              %# Add to the plot
+plot(x,yfit,'r');     %# Plot the best-fit line
+hold off;
+index = (x >= p3(1)) & (x <= p4(1));   %# Get the index of the line segment
+fit2 = polyfit(x(index),y(index),1);  %# Fit polynomial coefficients for line
+yfit = fit2(2)+x.*fit2(1);  %# Compute the best-fit line
+hold on;              %# Add to the plot
+plot(x,yfit,'r');     %# Plot the best-fit line
+hold off;
+pause
+index = (x >= p5(1)) & (x <= p6(1));   %# Get the index of the line segment
+fit3 = polyfit(x(index),y(index),1);  %# Fit polynomial coefficients for line
+yfit = fit3(2)+x.*fit3(1);  %# Compute the best-fit line
+hold on;              %# Add to the plot
+plot(x,yfit,'r');     %# Plot the best-fit line
+hold off;
 
 
 % --- Executes on selection change in popupmenuX.
@@ -210,3 +225,63 @@ function axes1_CreateFcn(hObject, eventdata, handles)
 % handles    empty - handles not created until after all CreateFcns called
 
 % Hint: place code in OpeningFcn to populate axes1
+
+
+% --- Executes on button press in selectpoint1.
+function selectpoint1_Callback(hObject, eventdata, handles)
+% hObject    handle to selectpoint1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in selectpoint2.
+function selectpoint2_Callback(hObject, eventdata, handles)
+% hObject    handle to selectpoint2 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+
+function edit2_Callback(hObject, eventdata, handles)
+% hObject    handle to edit2 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of edit2 as text
+%        str2double(get(hObject,'String')) returns contents of edit2 as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function edit2_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit2 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function edit4_Callback(hObject, eventdata, handles)
+% hObject    handle to edit4 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of edit4 as text
+%        str2double(get(hObject,'String')) returns contents of edit4 as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function edit4_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit4 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
