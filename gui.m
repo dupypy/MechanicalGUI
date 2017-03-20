@@ -22,7 +22,7 @@ function varargout = gui(varargin)
 
 % Edit the above text to modify the response to help gui
 
-% Last Modified by GUIDE v2.5 19-Mar-2017 13:00:46
+% Last Modified by GUIDE v2.5 19-Mar-2017 13:49:28
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -85,7 +85,7 @@ setPopupMenuString(handles.popupmenuX, eventdata, handles); % custom function
 setPopupMenuString(handles.popupmenuY, eventdata, handles); % custom function
 set(handles.popupmenuX, 'callback', 'gui(''updateAxes'',gcbo, [], guidata(gcbo))');
 set(handles.popupmenuY, 'callback', 'gui(''updateAxes'',gcbo, [], guidata(gcbo))');
-
+%set(handles.axes1, 'callback', 'gui(''linearfit'',gcbo, [], guidata(gcbo))');
 
 function setPopupMenuString(hObject, eventdata, handles)    % define custom function
 filename = handles.filename;
@@ -126,19 +126,30 @@ plot(handles.axes1, x, y, 'o', 'linewidth', 0.5);
 set(gca, 'box', 'off', 'XMinorTick', 'on', 'YMinorTick', 'on');
 set(handles.ylabel, 'string', unit(yColNum));
 set(handles.xlabel, 'string', unit(xColNum));
-[px, py] = getpts;
-[p] = linearfit(px, x, y)
+pause      % press enter to continue selecting points
 
+[px1, py1] = ginput(1);
+set(handles.point1, 'string', num2str(px1(1)));
+[px2, py2] = ginput(1);
+set(handles.point2, 'string', num2str(px2(1)));
+[px3, py3] = ginput(1);
+set(handles.point3, 'string', num2str(px3(1)));
+[px4, py4] = ginput(1);
+set(handles.point4, 'string', num2str(px4(1)));
+[px5, py5] = ginput(1);
+set(handles.point5, 'string', num2str(px5(1)));
+[px6, py6] = ginput(1);
+set(handles.point6, 'string', num2str(px6(1)));
+%[p] = linearfit(px, x, y)
+%set(handles.fitting, 'string', num2str(p));
 
-function [p] = linearfit(px, x, y)
-index = (x >= px(1)) & (x <= px(2));   %# Get the index of the line segment
-p = polyfit(x(index),y(index),1);  %# Fit polynomial coefficients for line
-yfit = p(2)+x.*p(1);  %# Compute the best-fit line
-hold on;              %# Add to the plot
-plot(x,yfit,'r');     %# Plot the best-fit line
-
-
-
+%function [p] = linearfit(px, x, y)
+%index = (x >= px(1)) & (x <= px(2));   %# Get the index of the line segment
+%p = polyfit(x(index),y(index),1);  %# Fit polynomial coefficients for line
+%yfit = p(2)+x.*p(1);  %# Compute the best-fit line
+%hold on;              %# Add to the plot
+%plot(x,yfit,'r');     %# Plot the best-fit line
+%hold off;
 
 
 % --- Executes on selection change in popupmenuX.
@@ -191,3 +202,11 @@ end
 
 
 
+
+% --- Executes during object creation, after setting all properties.
+function axes1_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to axes1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: place code in OpeningFcn to populate axes1
