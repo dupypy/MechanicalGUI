@@ -126,16 +126,22 @@ plot(handles.axes1, x, y, 'o', 'linewidth', 0.5);
 set(gca, 'box', 'off', 'XMinorTick', 'on', 'YMinorTick', 'on');
 set(handles.ylabel, 'string', unit(yColNum));
 set(handles.xlabel, 'string', unit(xColNum));
-pause      % press enter to continue selecting points
-
+zoom on;
+pause
 [p1] = ginput(1);
 set(handles.point1, 'string', num2str(p1));
 [p2] = ginput(1);
 set(handles.point2, 'string', num2str(p2));
+pause
+zoom on;
+pause
 [p3] = ginput(1);
 set(handles.point3, 'string', num2str(p3));
 [p4] = ginput(1);
 set(handles.point4, 'string', num2str(p4));
+pause
+zoom on;
+pause
 [p5] = ginput(1);
 set(handles.point5, 'string', num2str(p5));
 [p6] = ginput(1);
@@ -154,12 +160,12 @@ plot(x,yfit,'r');     %# Plot the best-fit line
 index = (x >= p3(1)) & (x <= p4(1));   %# Get the index of the line segment
 fit2 = polyfit(x(index),y(index),1);  %# Fit polynomial coefficients for line
 yfit = fit2(2)+x.*fit2(1);  %# Compute the best-fit line
-plot(x,yfit,'r');     %# Plot the best-fit line
+plot(x,yfit,'Color',[0 0.5 0]);     %# Plot the best-fit line
 pause
 index = (x >= p5(1)) & (x <= p6(1));   %# Get the index of the line segment
 fit3 = polyfit(x(index),y(index),1);  %# Fit polynomial coefficients for line
 yfit = fit3(2)+x.*fit3(1);  %# Compute the best-fit line
-plot(x,yfit,'r');     %# Plot the best-fit line
+plot(x,yfit,'k');     %# Plot the best-fit line
 hold off;
 
 
