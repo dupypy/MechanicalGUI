@@ -151,18 +151,14 @@ fit1 = polyfit(x(index),y(index),1);  %# Fit polynomial coefficients for line
 yfit = fit1(2)+x.*fit1(1);  %# Compute the best-fit line
 hold on;              %# Add to the plot
 plot(x,yfit,'r');     %# Plot the best-fit line
-hold off;
 index = (x >= p3(1)) & (x <= p4(1));   %# Get the index of the line segment
 fit2 = polyfit(x(index),y(index),1);  %# Fit polynomial coefficients for line
 yfit = fit2(2)+x.*fit2(1);  %# Compute the best-fit line
-hold on;              %# Add to the plot
 plot(x,yfit,'r');     %# Plot the best-fit line
-hold off;
 pause
 index = (x >= p5(1)) & (x <= p6(1));   %# Get the index of the line segment
 fit3 = polyfit(x(index),y(index),1);  %# Fit polynomial coefficients for line
 yfit = fit3(2)+x.*fit3(1);  %# Compute the best-fit line
-hold on;              %# Add to the plot
 plot(x,yfit,'r');     %# Plot the best-fit line
 hold off;
 
