@@ -22,7 +22,7 @@ function varargout = gui(varargin)
 
 % Edit the above text to modify the response to help gui
 
-% Last Modified by GUIDE v2.5 19-Mar-2017 21:45:04
+% Last Modified by GUIDE v2.5 20-Mar-2017 16:46:29
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -150,6 +150,8 @@ set(handles.point6, 'string', num2str(p6));
 set(handles.slope1, 'string', num2str(fit1));
 set(handles.slope2, 'string', num2str(fit2));
 set(handles.slope3, 'string', num2str(fit3));
+pause
+zoom on
 
 function [fit1, fit2, fit3] = linearfit(p1, p2, p3, p4, p5, p6, x, y)
 index = (x >= p1(1)) & (x <= p2(1));   %# Get the index of the line segment
@@ -161,7 +163,6 @@ index = (x >= p3(1)) & (x <= p4(1));   %# Get the index of the line segment
 fit2 = polyfit(x(index),y(index),1);  %# Fit polynomial coefficients for line
 yfit = fit2(2)+x.*fit2(1);  %# Compute the best-fit line
 plot(x,yfit,'Color',[0 0.5 0]);     %# Plot the best-fit line
-pause
 index = (x >= p5(1)) & (x <= p6(1));   %# Get the index of the line segment
 fit3 = polyfit(x(index),y(index),1);  %# Fit polynomial coefficients for line
 yfit = fit3(2)+x.*fit3(1);  %# Compute the best-fit line
@@ -287,3 +288,14 @@ function edit4_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
+
+
+% --- Executes on button press in export.
+function export_Callback(hObject, eventdata, handles)
+% hObject    handle to export (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+axes(handles.axes1);
+[FileName, PathName] = uiputfile('*.eps', 'Save As');
+Name = fullfile(PathName, FileName);
+print(Name,'-depsc');
