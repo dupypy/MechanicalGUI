@@ -168,7 +168,7 @@ fit3 = polyfit(x(index),y(index),1);  %# Fit polynomial coefficients for line
 yfit = fit3(2)+x.*fit3(1);  %# Compute the best-fit line
 plot(x,yfit,'k');     %# Plot the best-fit line
 hold off;
-guidata(hObject,handles);
+
 
 
 % --- Executes on selection change in popupmenuX.
@@ -297,17 +297,13 @@ function export_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 [FileName, PathName] = uiputfile('*.eps', 'Save As');
-handles = guidata(hObject);
-        %// Get the position of the axes you are interested in. The 3rd and
-        %// 4th coordinates are useful (width and height).
-        
-        
-AxesPos = get(handles.axes1,'Position');    
-
-        %// Call getframe with a custom rectangle size.You might need to change this.
-F = getframe(gca,[-30 -30 AxesPos(3)+470 AxesPos(4)+485]);
-
-        %// Just to display the result
-figure()
-imshow(F.cdata) 
-print(gcf,[PathName FileName]);
+Name     = fullfile(PathName, FileName);
+AxesPos = get(handles.axes1,'Position');
+NewFigH  = figure;
+NewAxesH = copyobj(handles.axes1, NewFigH);
+set(NewAxesH, 'units', 'normalized', 'outerposition', [0 0 1 1]);
+%set(NewAxesH, 'Position', [20 20 AxesPos(3) AxesPos(4)]);
+%set(NewAxesH, 'Position', get(NewFigH, 'DefaultAxesPosition'))
+drawnow;
+print(Name, NewFigH, '-depsc');
+close(NewFigH);
