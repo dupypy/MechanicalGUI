@@ -124,8 +124,8 @@ unit = strsplit(fgetl(fid), ',');
 [x, y] = parsedata(filename, xColNum, yColNum);
 plot(handles.axes1, x, y, 'o', 'linewidth', 0.5);
 set(gca, 'box', 'off', 'XMinorTick', 'on', 'YMinorTick', 'on');
-set(handles.ylabel, 'string', unit(yColNum));
-set(handles.xlabel, 'string', unit(xColNum));
+xlabel(handles.axes1, unit(yColNum));
+ylabel(handles.axes1, unit(xColNum));
 zoom on;
 pause
 [p1] = ginput(1);
